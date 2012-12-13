@@ -1,0 +1,7 @@
+<form action="#" id="create">
+	<div><label for="name">Name</label><input type="text" name="name" id="name" /></div>
+	<div><label for="minReps">Min Reps</label><input type="number" name="minReps" id="minReps" /></div>
+	<div><label for="maxReps">Max Reps</label><input type="number" name="maxReps" id="maxReps" /></div>
+	<button class="back small">Cancel</button>  <button type="submit">Add</button>
+</form>
+
