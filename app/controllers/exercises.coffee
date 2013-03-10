@@ -20,12 +20,11 @@ class Exercises extends Spine.Controller
 		super
 		Exercise.fetch()
 		@render()
-		
+	
 	render: (e)->
-		if e
-			e.preventDefault()
+		e?.preventDefault()
 		@html require('views/main')
-		
+	
 	spin: (e)->
 		e.preventDefault()
 		#@log 'spin!!!'
@@ -64,36 +63,36 @@ class Exercises extends Spine.Controller
 			alert 'better add some exercises'
 			if confirm 'want to use a default set?'
 				Exercise.loadDefaults()
-		
+	
 	addNew: (e)->
 		e.preventDefault()
-		#render form
 		@html require('views/exerciseForm')
-		#@log @list
-		
+	
 	create: (e)->
-		if e
-			e.preventDefault()
-		#@log 'submitting'
-		#@log $('#create')
+		e?.preventDefault()
 		exercise = Exercise.fromForm($('#create'))
 		exercise.save()
-		@render()
-		
+		@html "<h3>Saved #{exercise.name}!</h3>"
+		# delay to give feedback that exercise was added
+		setTimeout ( =>
+			@render()
+		), 800
+	
 	list: (e)->
-		if e
-			e.preventDefault()
+		e?.preventDefault()
 		@items = Exercise.all()
 		@html require('views/list')
 		$('#itemList').html require('views/listItem')(@items)
-		
+	
 	destroy: (e)->
 		e.preventDefault()
-		#@log 'deleting'
-		itemId = $(e.target).data('id')
+		item = $(e.target)
+		itemId = item.data('id')
 		#@log itemId
 		Exercise.find(itemId).destroy()
-		@list()
+		item.parent().slideUp()
+		#since we slide the item out of view there is no need to re-render the list.
+		#@list()
 		
 	getRandomInt: (min, max)->
 		Math.floor(Math.random() * (max - min + 1)) + min
