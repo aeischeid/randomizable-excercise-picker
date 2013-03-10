@@ -1,11 +1,10 @@
 {
   "name": "exerciseSlot",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "dependencies": {
-    "hem": "git+https://github.com/globalvetlink/hem.git",
-    "es5-shimify": "~0.0.1",
-    "json2ify": "~0.0.1",
-    "jqueryify": "~0.0.3",
-    "spine": "~1.0.8"
+    "es5-shimify": "~2.0.5",
+    "json2ify": "~0.0.3",
+    "jqueryify": "~1.9.1",
+    "spine": "1.0.9"
   }
 }

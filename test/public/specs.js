@@ -3,10 +3,11 @@
 (function(/*! Stitch !*/) {
   if (!this.specs) {
     var modules = {}, cache = {}, require = function(name, root) {
-      var path = expand(root, name), module = cache[path], fn;
+      var path = expand(root, name), indexPath = expand(path, './index'), module, fn;
+      module   = cache[path] || cache[indexPath]
       if (module) {
         return module.exports;
-      } else if (fn = modules[path] || modules[path = expand(path, './index')]) {
+      } else if (fn = modules[path] || modules[path = indexPath]) {
         module = {id: path, exports: {}};
         try {
           cache[path] = module;
