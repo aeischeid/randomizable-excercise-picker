@@ -10,7 +10,7 @@
 
   "packages": {
     "slots": {
-      "libs"    : [],
+      "libs"    : ["lib/runtime.js"],
       "modules" : [
         "jqueryify",
         "spine",

@@ -48,6 +48,8 @@ class Exercises extends Spine.Controller
 			# from that exercise pick random between it's 'minReps and maxReps
 			randomReps = @getRandomInt(parseInt(randomExercise.minReps,10), parseInt(randomExercise.maxReps,10))
 			i = 0
+			@currentReps.addClass('flipX')
+			@currentExercise.addClass('flipX')
 			ri = setInterval ( =>
 				if i <= randomReps
 					@currentReps.text i 
@@ -58,6 +60,8 @@ class Exercises extends Spine.Controller
 					@currentExercise.text randomExercise.name
 					clearInterval(ri)
 					@currentReps.text randomReps
+					@currentReps.removeClass('flipX')
+					@currentExercise.removeClass('flipX')
 			), 1000
 		else
 			alert 'better add some exercises'
