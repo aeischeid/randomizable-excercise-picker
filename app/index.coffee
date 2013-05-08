@@ -7,7 +7,7 @@ class App extends Spine.Controller
 	constructor: ->
 		super
 		
-		exercises = new Exercises
+		exercises = new Exercises()
 		@html exercises
 
 module.exports = App

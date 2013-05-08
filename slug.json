@@ -1,10 +1,34 @@
 {
-  "dependencies": [
-    "es5-shimify", 
-    "json2ify", 
-    "jqueryify", 
-    "spine",
-    "spine/lib/local"
+  "server": {
+    "port"  : 9294
+  },
+
+  "routes": [
+    { "/slots"        : "./public" },
+    { "/slots/test"   : "./test/public" }
   ],
-  "libs": []
+
+  "packages": {
+    "slots": {
+      "libs"    : [],
+      "modules" : [
+        "jqueryify",
+        "spine",
+        "spine/lib/local"
+      ],
+      "paths"  : ["./app"],
+      "target" : "./public/application.js",
+      "jsAfter": "jade.rethrow = function rethrow(err, filename, lineno){ throw err; } "
+    },
+    "css": {
+      "paths"  : "./css",
+      "target" : "./public/application.css"
+    },
+    "test": {
+      "identifier" : "specs",
+      "jsAfter"    : "require('lib/setup'); for (var key in specs.modules) specs(key);",
+      "paths"      : ["./test/specs"],
+      "target"     : "./test/public/specs.js"
+    }
+  }
 }
