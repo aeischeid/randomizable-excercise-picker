@@ -24,10 +24,10 @@ class Exercise extends Spine.Model
 		{'name':'Flys / Reverse flys','minReps':10,'maxReps':20}
 	]
 	
-	@loadDefaults: ->
+	@loadDefaults: (callback) ->
 		for exercise in defaultSet
 			newOne = new Exercise(exercise)
 			newOne.save()
-		alert "sweet, loaded #{defaultSet.length} items!"
+		Exercise.trigger 'loadedDefaults', defaultSet.length 
 			
 module.exports = Exercise

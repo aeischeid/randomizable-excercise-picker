@@ -3,18 +3,21 @@ Exercise = require('models/exercise')
 
 class Exercises extends Spine.Controller
 	events:
-		'click #spinner':'spin'
-		'click #addNew':'addNew'
-		'submit #create':'create'
-		'click #remove':'list'
-		'click a.delete':'destroy'
+		'click #spinner'   :'spin'
+		'click #addNew'    :'addNew'
+		'submit #create'   :'create'
+		'click #remove'    :'list'
+		'click a.delete'   :'destroy'
 		'click button.back':'render'
+		'click #destroyAll':'destroyAll'
+		'click #cancel'    :'list'
 	
 	elements:
-		'#currentReps':'currentReps'
+		'#currentReps'    :'currentReps'
 		'#currentExercise':'currentExercise'
-		'#exerciseData':'exerciseData'
-		'form #create':'createForm'
+		'#exerciseData'   :'exerciseData'
+		'form #create'    :'createForm'
+		'#itemList'       :'itemList'
 	
 	constructor: ->
 		super
@@ -26,7 +29,7 @@ class Exercises extends Spine.Controller
 		@html require('views/main')
 	
 	spin: (e)->
-		e.preventDefault()
+		e?.preventDefault()
 		#@log 'spin!!!'
 		eCount = Exercise.count()
 		if eCount
@@ -64,29 +67,32 @@ class Exercises extends Spine.Controller
 					@currentExercise.removeClass('flipX')
 			), 1000
 		else
-			alert 'better add some exercises'
-			if confirm 'want to use a default set?'
-				Exercise.loadDefaults()
+			@populate()
+	
+	populate: ->
+		if confirm 'You do not have anything to spin through. Want to use a default set of excercises?'
+			Exercise.one 'loadedDefaults', (count)=>
+				alert "Sweet, loaded #{count} excercises, ready to get sweaty?"
+				@spin()
+			Exercise.loadDefaults(@spin)
 	
 	addNew: (e)->
 		e.preventDefault()
-		@html require('views/exerciseForm')
+		$('#adder').html require('views/exerciseForm')
 	
 	create: (e)->
 		e?.preventDefault()
 		exercise = Exercise.fromForm($('#create'))
 		exercise.save()
-		@html "<h3>Saved #{exercise.name}!</h3>"
-		# delay to give feedback that exercise was added
-		setTimeout ( =>
-			@render()
-		), 800
+		@list()
 	
 	list: (e)->
 		e?.preventDefault()
-		@items = Exercise.all()
 		@html require('views/list')
-		$('#itemList').html require('views/listItem')(@items)
+		items = ''
+		for item in Exercise.all()
+			items += require('views/listItem')(item)
+		@itemList.prepend items
 	
 	destroy: (e)->
 		e.preventDefault()
@@ -97,6 +103,12 @@ class Exercises extends Spine.Controller
 		item.parent().slideUp()
 		#since we slide the item out of view there is no need to re-render the list.
 		#@list()
+	
+	destroyAll: (e)->
+		e.preventDefault()
+		if confirm 'really?!'
+			Exercise.destroyAll()
+			@list()
 		
 	getRandomInt: (min, max)->
 		Math.floor(Math.random() * (max - min + 1)) + min
