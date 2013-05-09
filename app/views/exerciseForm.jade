@@ -1,0 +1,12 @@
+li
+	form#create(action="#")
+		input#name(type="text", name="name", placeholder="name/description")
+		div
+			label(for="minReps") Min Reps
+			input#minReps.number(type="number", name="minReps")
+			label(for="maxReps") Max Reps
+			input#maxReps.number(type="number", name="maxReps")
+		div
+			button#cancel.round Cancel
+			button.round.add(type="submit") Add
+

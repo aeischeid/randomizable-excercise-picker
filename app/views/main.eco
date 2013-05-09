@@ -1,4 +1,0 @@
-<div id="currentReps">o o</div>
-<div id="currentExercise">___</div>
-<button id="spinner">Spin</button>
-<div><button class="small" id="addNew">Add</button> - <button class="small" id="remove">Remove</button></div>
